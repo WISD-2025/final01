@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('status')->default('pending'); // 狀態：pending, preparing, completed
             $table->timestamps();
         });
     }
