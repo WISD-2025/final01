@@ -12,6 +12,11 @@ class Order extends Model
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'status',
+    ];
+
      //定義一對一反向關聯 (一張訂單只屬於一位使用者)
     public function user(): BelongsTo
     {

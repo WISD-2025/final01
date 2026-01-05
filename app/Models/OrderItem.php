@@ -11,6 +11,12 @@ class OrderItem extends Model
     /** @use HasFactory<\Database\Factories\OrderItemFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'meal_id',
+        'quantity',
+    ];
+
     // 多對一反向關聯 (訂單項目屬於哪張訂單)
     public function order(): BelongsTo
     {

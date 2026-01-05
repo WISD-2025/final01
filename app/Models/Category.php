@@ -11,6 +11,10 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
 
+    protected $fillable=[
+        'name',         
+    ];
+
     // 定義一對多的關聯方法
     public function meals(): HasMany
     {

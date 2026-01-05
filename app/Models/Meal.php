@@ -12,6 +12,15 @@ class Meal extends Model
     /** @use HasFactory<\Database\Factories\MealFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'price',
+        'category_id',
+        'stock',
+        'image1',
+        'image2',
+    ];
+
     // 定義多對一反向關聯
     public function category(): BelongsTo
     {
