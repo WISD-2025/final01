@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AdminMealController;
 use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -15,6 +15,16 @@ Route::view('dashboard', 'dashboard')
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminHomeController::class, 'index'])->name("home.index");
+
+    //餐點管理
+    Route::prefix('meals')->name('meals.')->group(function () {
+        Route::get('/', [AdminMealController::class, 'index'])->name('index');          // 顯示: /admin/meals
+        Route::get('/create', [AdminMealController::class, 'create'])->name('create');  // 新增: /admin/meals/create
+        Route::post('/', [AdminMealController::class, 'store'])->name('store');         // 儲存: /admin/meals
+        Route::get('/{meal}/edit', [AdminMealController::class, 'edit'])->name('edit'); // 編輯: /admin/meals/{id}/edit
+        Route::put('/{meal}', [AdminMealController::class, 'update'])->name('update');  // 更新: /admin/meals/{id}
+        Route::delete('/{meal}', [AdminMealController::class, 'destroy'])->name('destroy'); // 刪除: /admin/meals/{id}
+    });
 });
 
 Route::middleware(['auth'])->group(function () {

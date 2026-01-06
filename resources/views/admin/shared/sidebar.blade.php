@@ -21,6 +21,11 @@
                         <i class="fas fa-home"></i> <p>主控台</p>
                     </a>
                 </li>
+                <li class="nav-item {{ Route::is('admin.meals.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.meals.index') }}">
+                        <i class="fas fa-utensils"></i><p>餐點管理</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
