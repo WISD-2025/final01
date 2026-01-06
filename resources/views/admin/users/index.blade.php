@@ -43,7 +43,11 @@
                                     <td>{{ $user->created_at->format('Y-m-d') }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" href="{{ route('admin.users.edit', $user->id) }}">編輯</a>
-                                        <a href = "#">刪除</a>
+                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline-block">
+                                            @method('DELETE') 
+                                            @csrf 
+                                            <button class="btn btn-sm btn-danger" type="submit">刪除</button> 
+                                        </form> 
                                     </td>
                                 </tr>
                                 @endforeach

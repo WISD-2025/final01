@@ -37,6 +37,18 @@
     <script src="{{ asset('js/core/popper.min.js') }}"></script>
     <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/kaiadmin.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: '操作失敗',
+                text: "{{ session('error') }}",
+                confirmButtonText: '確定'
+            });
+    @endif
+    </script>
     @yield('scripts')
     </body>
 </html>

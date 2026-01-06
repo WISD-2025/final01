@@ -80,8 +80,17 @@ class AdminUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        // 防止刪除目前登入的帳號
+        if ($user->id === auth()->id()) {
+            return back()->with('error', '不能刪除自己的帳號！');
+        }
+
+        // 執行資料庫刪除
+        $user->delete();
+
+        // 跳轉回到人員列表頁
+        return redirect()->route('admin.users.index');
     }
 }
