@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Middleware\CheckAdmin; // 引入 CheckAdmin
 use App\Http\Controllers\AdminMealController;
@@ -24,6 +25,9 @@ Route::prefix('admin')
 
     //人員管理
     Route::resource('users', AdminUserController::class);
+
+    //訂單管理
+    Route::resource('orders', AdminOrderController::class);
 
     //餐點管理
     Route::prefix('meals')->name('meals.')->group(function () {

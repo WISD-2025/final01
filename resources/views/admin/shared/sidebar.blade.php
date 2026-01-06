@@ -30,7 +30,11 @@
                         <i class="fas fa-utensils"></i><p>餐點管理</p>
                     </a>
                 </li>
-
+                <li class="nav-item {{ Route::is('admin.orders.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.orders.index') }}">
+                        <i class="fas fa-shopping-cart"></i> <p>訂單管理</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
