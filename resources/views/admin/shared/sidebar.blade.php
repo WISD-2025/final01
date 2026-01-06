@@ -15,10 +15,14 @@
                     <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
                     <h4 class="text-section">主選單</h4>
                 </li>
-
-                <li class="nav-item active">
+                <li class="nav-item {{ Route::is('admin.home.index') ? 'active' : '' }}">
                     <a href="{{ route('admin.home.index') }}">
                         <i class="fas fa-home"></i> <p>主控台</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Route::is('admin.users.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.users.index') }}">
+                        <i class="fas fa-users"></i> <p>人員管理</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Route::is('admin.meals.*') ? 'active' : '' }}">
@@ -26,6 +30,7 @@
                         <i class="fas fa-utensils"></i><p>餐點管理</p>
                     </a>
                 </li>
+
             </ul>
         </div>
     </div>

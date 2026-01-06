@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\AdminUserController;
 use App\Http\Middleware\CheckAdmin; // 引入 CheckAdmin
 use App\Http\Controllers\AdminMealController;
 use App\Http\Controllers\AdminHomeController;
@@ -20,6 +21,9 @@ Route::prefix('admin')
     ->group(function () {
 
     Route::get('/', [AdminHomeController::class, 'index'])->name("home.index");
+
+    //人員管理
+    Route::resource('users', AdminUserController::class);
 
     //餐點管理
     Route::prefix('meals')->name('meals.')->group(function () {
