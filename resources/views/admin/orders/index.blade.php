@@ -33,7 +33,7 @@
                         <td>
                             <a href = "{{ route('admin.orders.edit', $order->id) }}">編輯 / </a>
                             <a href = "#">刪除 / </a>
-                            <a href="{{ route('admin.orders.show', $order->id) }}">查看明細</a>
+                            <a class="btn btn-sm btn-primary" href="{{ route('admin.orders.show', $order->id) }}">查看明細</a>
                         </td>
                     </tr>
                     @endforeach

@@ -48,9 +48,16 @@ class AdminOrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
+        // 載入 orderItems 以及每個項目對應的 meal 資料
+        $order->load(['user', 'orderItems.meal']);
+
+        $data = [
+            'order' => $order,
+        ];
+
+        return view('admin.orders.show', $data);
     }
 
     /**
