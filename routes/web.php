@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\CheckAdmin; // 引入 CheckAdmin
 use App\Http\Controllers\AdminMealController;
 use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,11 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', CheckAdmin::class]) // 在這裡套用 CheckAdmin::class
+    ->group(function () {
+
     Route::get('/', [AdminHomeController::class, 'index'])->name("home.index");
 
     //餐點管理
