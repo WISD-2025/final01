@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
+use App\Models\Category; // 引入 Category Model
 use Illuminate\Http\Request;
 
 class AdminMealController extends Controller
@@ -26,7 +27,14 @@ class AdminMealController extends Controller
      */
     public function create()
     {
-        //
+        // 抓取所有類別，讓下拉選單可以選擇
+        $categories = Category::all();
+
+        $data = [
+            'categories' => $categories,
+        ];
+
+        return view('admin.meals.create', $data);
     }
 
     /**
@@ -34,7 +42,18 @@ class AdminMealController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 驗證資料
+        $request->validate([
+        'name' => 'required',
+        'price' => 'required|numeric',
+        'category_id' => 'required',
+        'stock' => 'required|numeric',
+        ]);
+
+        // 存入資料庫
+        Meal::create($request->all());
+        // 跳轉回到列表頁，顯示成功訊息
+        return redirect()->route('admin.meals.index');
     }
 
     /**
