@@ -49,17 +49,32 @@ class AdminUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'required|in:user,admin', // 確保角色只能是這兩個值
+        ]);
+
+        // 防止管理員不小心把自己從 admin 變成 user (導致無法再進後台)
+        if ($user->id === auth()->id() && $request->role !== 'admin') {
+            return back()->with('error', '無法取消自己的管理員權限！');
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**

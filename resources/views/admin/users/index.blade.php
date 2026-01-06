@@ -42,7 +42,7 @@
                                     </td>
                                     <td>{{ $user->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                        <a href = "{{ route('admin.users.edit', $user->id) }}">編輯 /</a>
+                                        <a class="btn btn-sm btn-primary" href="{{ route('admin.users.edit', $user->id) }}">編輯</a>
                                         <a href = "#">刪除</a>
                                     </td>
                                 </tr>
