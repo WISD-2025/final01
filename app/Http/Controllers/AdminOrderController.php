@@ -63,17 +63,29 @@ class AdminOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Order $order)
     {
-        //
+        $data = [
+            'order' => $order,
+        ];
+
+        return view('admin.orders.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        // 確保狀態值
+        $request->validate([
+            'status' => 'required|in:pending,preparing,completed,cancelled',
+        ]);
+        // 執行更新
+        $order->update([
+            'status' => $request->status,
+        ]);
+        return redirect()->route('admin.orders.index');
     }
 
     /**
