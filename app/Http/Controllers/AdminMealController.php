@@ -48,11 +48,24 @@ class AdminMealController extends Controller
         'price' => 'required|numeric',
         'category_id' => 'required',
         'stock' => 'required|numeric',
+        'image1' => 'nullable|image|max:2048', // 限制圖片2MB
         ]);
 
+        $data = $request->all();
+
+        if ($request->hasFile('image1')) {
+            $file = $request->file('image1');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+
+            // 直接存入 public/storage/meals
+            $file->move(public_path('storage/meals'), $fileName);
+            // 資料庫存入 meals/檔名.jpg
+            $data['image1'] = 'meals/' . $fileName;
+        }
+
         // 存入資料庫
-        Meal::create($request->all());
-        // 跳轉回到列表頁，顯示成功訊息
+         Meal::create($data);
+        // 跳轉回到列表頁
         return redirect()->route('admin.meals.index');
     }
 

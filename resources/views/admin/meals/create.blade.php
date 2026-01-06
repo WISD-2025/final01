@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form action="{{ route('admin.meals.store') }}" method="POST">
+        <form action="{{ route('admin.meals.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-body">
@@ -26,6 +26,11 @@
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>餐點圖片 (image1)</label>
+                                <input type="file" name="image1" class="form-control">
                             </div>
                         </div>
 

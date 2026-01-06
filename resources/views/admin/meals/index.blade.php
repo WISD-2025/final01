@@ -17,7 +17,8 @@
                         <thead>
                             <tr>
                                 <th>餐點編號</th>
-                                <th>名稱</th>
+                                <th>名稱</th> 
+                                <th>圖片</th> 
                                 <th>價格</th>
                                 <th>類別</th>
                                 <th>庫存</th>
@@ -29,6 +30,17 @@
                             <tr>
                                 <td>{{ $meal->id }}</td>
                                 <td>{{ $meal->name }}</td>
+                                <td>
+                                    @if($meal->image1)
+                                        <img src="{{ asset('storage/' . $meal->image1) }}" 
+                                             alt="{{ $meal->name }}" 
+                                             style="width: 60px; height: 45px; object-fit: cover;" 
+                                             class="rounded border">
+                                    @else
+                                        <span class="text-muted" style="font-size: 12px;">無圖</span>
+                                    @endif
+                                </td>
+
                                 <td>${{ $meal->price }}</td>
                                 <td>{{ $meal->category->name }}</td>
                                 <td>{{ $meal->stock }}</td>
