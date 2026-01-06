@@ -45,7 +45,7 @@
                                 <td>{{ $meal->category->name }}</td>
                                 <td>{{ $meal->stock }}</td>
                                 <td>
-                                    <a href = "{{ route('admin.meals.edit', $meal->id) }}">編輯 /</a>
+                                    <a class="btn btn-sm btn-primary" href="{{ route('admin.meals.edit', $meal->id) }}">編輯</a>
                                     <a href = "#">刪除</a>
                                 </td>
                             </tr>
