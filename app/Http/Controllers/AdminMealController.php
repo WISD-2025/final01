@@ -133,8 +133,14 @@ class AdminMealController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Meal $meal)
     {
-        //
+        //刪除實體圖片檔案
+        if ($meal->image1 && File::exists(public_path('storage/' . $meal->image1))) {
+            File::delete(public_path('storage/' . $meal->image1));
+        }
+        //執行資料庫刪除
+        $meal->delete();
+        return redirect()->route('admin.meals.index');
     }
 }

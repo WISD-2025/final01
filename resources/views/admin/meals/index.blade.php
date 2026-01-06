@@ -46,7 +46,11 @@
                                 <td>{{ $meal->stock }}</td>
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="{{ route('admin.meals.edit', $meal->id) }}">編輯</a>
-                                    <a href = "#">刪除</a>
+                                    <form action="{{ route('admin.meals.destroy', $meal->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('確定要刪除這道餐點嗎？');">                                       
+                                        @csrf 
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger" type="submit">刪除</button> 
+                                    </form> 
                                 </td>
                             </tr>
                             @endforeach
