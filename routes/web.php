@@ -68,3 +68,8 @@ Route::get('/menu', function () {
     // 丟到 resources/views/menu/index.blade.php
     return view('menu.index', ['categories' => $categories]);
 })->name('menu.index');
+
+Route::get('/cart', function () {
+    return view('cart.index');
+})->name('cart.index');
+
