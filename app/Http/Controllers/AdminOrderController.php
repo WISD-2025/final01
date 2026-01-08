@@ -17,7 +17,8 @@ class AdminOrderController extends Controller
             ->orderByRaw("CASE 
                 WHEN status = 'preparing' THEN 1 
                 WHEN status = 'pending' THEN 2 
-                ELSE 3 
+                WHEN status = 'completed' THEN 3 
+                ELSE 4
             END ASC")
             ->orderBy('id', 'asc') //同狀態下按照 ID 排序
             ->get();
