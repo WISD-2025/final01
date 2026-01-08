@@ -18,12 +18,12 @@
                     </tr>
                 </thead>
                 <tbody id="cart-body" class="bg-white dark:bg-zinc-800 divide-y divide-gray-100 dark:divide-zinc-700">
-                    {{-- 這裡由 shop.js 的 renderCart() 自動灌資料 --}}
+                    {{-- 此處內容由 shop.js 自動填充 --}}
                 </tbody>
             </table>
         </div>
 
-        {{-- 底部按鈕區塊 --}}
+        {{-- 底部按鈕區塊 (整合版) --}}
         <div class="mt-8 flex flex-col md:flex-row justify-between items-center bg-gray-50 dark:bg-zinc-900/50 p-6 rounded-2xl shadow-sm gap-4">
             
             {{-- 左側：返回點餐 --}}
@@ -55,6 +55,58 @@
         </div>
     </div>
 
-
+    {{-- 載入 JS 資源 --}}
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/shop.js') }}"></script>
+
+    <script>
+        /**
+         * 提交訂單至後端資料庫
+         */
+        async function submitOrder() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // 抓取總金額數字，並處理可能的符號與逗號
+            let totalElement = document.getElementById('total');
+            let totalValue = parseInt(totalElement.innerText.replace(/[$,]/g, '')) || 0;
+
+            if (cart.length === 0) {
+                alert('您的購物車是空的，快去點餐吧！');
+                return;
+            }
+
+            if (!confirm(`確認要送出訂單嗎？總金額為 $${totalValue}`)) {
+                return;
+            }
+
+            try {
+                // 執行發送 POST 請求
+                const response = await fetch("{{ route('orders.store') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 重要：必須包含 CSRF Token，確保 Laravel 允許 POST 請求
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        cart: cart,
+                        total: totalValue
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('🎉 訂單建立成功！編號：' + result.order_id);
+                    localStorage.removeItem('cart'); // 成功後務必清除本地暫存
+                    window.location.href = "{{ route('dashboard') }}"; // 跳轉回首頁
+                } else {
+                    alert('❌ 送出失敗：' + (result.message || '伺服器錯誤'));
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('⚠️ 網路連線錯誤，請確認伺服器連線狀態');
+            }
+        }
+    </script>
 </x-layouts.app>

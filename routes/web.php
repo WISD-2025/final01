@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Models\Category;
+use App\Http\Controllers\OrderController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,3 +75,4 @@ Route::get('/cart', function () {
     return view('cart.index');
 })->name('cart.index');
 
+Route::resource('orders', OrderController::class)->only(['store']);
