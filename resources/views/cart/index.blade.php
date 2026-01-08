@@ -14,7 +14,7 @@
                         <th class="p-4 text-sm font-bold text-gray-700 dark:text-gray-200">單價</th>
                         <th class="p-4 text-sm font-bold text-gray-700 dark:text-gray-200 text-center">數量</th>
                         <th class="p-4 text-sm font-bold text-gray-700 dark:text-gray-200">小計</th>
-                        <th class="p-4 text-sm font-bold text-gray-700 dark:text-gray-200 text-center">操作</th>
+                        <th class="p-4 text-sm font-bold text-gray-700 dark:text-gray-200 text-center">刪除</th>
                     </tr>
                 </thead>
                 <tbody id="cart-body" class="bg-white dark:bg-zinc-800 divide-y divide-gray-100 dark:divide-zinc-700">
@@ -23,36 +23,39 @@
             </table>
         </div>
 
-        {{-- 底部按鈕區塊 (整合版) --}}
-        <div class="mt-8 flex flex-col md:flex-row justify-between items-center bg-gray-50 dark:bg-zinc-900/50 p-6 rounded-2xl shadow-sm gap-4">
             
-            {{-- 左側：返回點餐 --}}
-            <div class="flex-shrink-0">
-                <a href="{{ route('menu.index') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-zinc-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-zinc-700 rounded-xl hover:bg-gray-100 transition shadow-sm font-bold whitespace-nowrap">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-orange-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                    </svg>
-                    <span>繼續點餐</span>
-                </a>
-            </div>
-
-            {{-- 右側：金額顯示與動作按鈕 --}}
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="text-right">
-                    <p class="text-gray-400 text-sm font-medium">總計金額</p>
-                    <p class="text-3xl font-black text-blue-600 dark:text-blue-400">$<span id="total">0</span></p>
+           {{-- 底部按鈕區塊：確保使用 flex-row 且 justify-between --}}
+            <div class="mt-8 flex flex-row justify-between items-center p-6 bg-white border border-gray-100 rounded-2xl shadow-sm w-full">
+                
+                {{-- 左側：繼續點餐 (橫向中的第一個元素) --}}
+                <div class="flex-shrink-0">
+                    <a href="{{ route('menu.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-500 border border-gray-200 rounded-xl hover:bg-gray-50 transition shadow-sm font-bold whitespace-nowrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-orange-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        <span>繼續點餐</span>
+                    </a>
                 </div>
 
-                <div class="flex gap-4">
-                    <button onclick="clearCart()" class="px-6 py-3 text-red-500 hover:bg-red-50 rounded-xl transition font-bold">
+                {{-- 右側：金額與操作按鈕群組  --}}
+                <div class="flex flex-row items-center gap-8">
+                    {{-- 總計金額 --}}
+                    <div class="flex flex-col items-end">
+                        <span class="text-gray-400 text-xl font-bold">總計金額</span>
+                        <span class="text-3xl font-bold text-blue-600">$<span id="total">0</span></span>
+                    </div>
+
+                    {{-- 清空按鈕 (紅色文字) --}}
+                    <button onclick="clearCart()" class="text-red-500 hover:text-red-600 font-bold px-2 whitespace-nowrap">
                         清空
                     </button>
-                    <button onclick="submitOrder()" class="px-10 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition font-black shadow-lg shadow-orange-200">
+
+                    {{-- 確認送出按鈕 (橘色) --}}
+                    <button onclick="submitOrder()" class="px-8 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition font-bold shadow-md shadow-orange-200 whitespace-nowrap">
                         確認送出訂單
                     </button>
                 </div>
             </div>
-        </div>
     </div>
 
     {{-- 載入 JS 資源 --}}
