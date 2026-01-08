@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meal;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -14,7 +15,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. 取得前端傳來的 localStorage 資料
         $cart  = $request->input('cart');
         $total = $request->input('total');
 
@@ -35,12 +35,22 @@ class OrderController extends Controller
 
                 // 3. 建立訂單明細
                 foreach ($cart as $item) {
-                    OrderItem::create([
-                        'order_id' => $order->id,
-                        'meal_id'  => $item['id'],   // 前端 cart 存的餐點 id
-                        'quantity' => $item['qty'],  // 數量
-                    ]);
-                }
+                    // 使用 meal_id去meals表找這份餐點
+                    $meal = Meal::find($item['id']);
+
+                    if ($meal) {
+                        $buyQty = $item['qty']; // 顧客買的數量
+
+                        // 扣除庫存
+                        $meal->decrement('stock', $buyQty);
+
+                        OrderItem::create([
+                            'order_id' => $order->id,
+                            'meal_id'  => $item['id'],   // 前端 cart 存的餐點 id
+                            'quantity' => $buyQty,
+                        ]);
+                    }
+                } 
 
                 return response()->json([
                     'message'  => '訂單建立成功',
