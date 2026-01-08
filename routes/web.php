@@ -7,6 +7,9 @@ use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Models\Category;
+use App\Http\Controllers\OrderController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,3 +61,18 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+// 顯示菜單頁（純前端版）
+Route::get('/menu', function () {
+    // 把所有分類連同底下的餐點一起抓出來
+    $categories = Category::with('meals')->get();
+
+    // 丟到 resources/views/menu/index.blade.php
+    return view('menu.index', ['categories' => $categories]);
+})->name('menu.index');
+
+Route::get('/cart', function () {
+    return view('cart.index');
+})->name('cart.index');
+
+Route::resource('orders', OrderController::class)->only(['store']);
